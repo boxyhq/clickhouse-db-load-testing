@@ -1,0 +1,22 @@
+{
+  "name": "clickhouse-db-load-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ukrocks007/clickhouse-db-load-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ukrocks007/clickhouse-db-load-testing/issues"
+  },
+  "homepage": "https://github.com/ukrocks007/clickhouse-db-load-testing#readme",
+  "dependencies": {
+    "clickhouse": "^2.4.4"
+  }
+}
