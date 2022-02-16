@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ukrocks007/clickhouse-db-load-testing#readme",
   "dependencies": {
-    "clickhouse": "^2.4.4"
+    "clickhouse": "^2.4.4",
+    "play-sound": "^1.1.5",
+    "uuid": "^8.3.2"
   }
 }
