@@ -1,5 +1,4 @@
 const { ClickHouse } = require('clickhouse');
-const { join } = require('path');
 
 const clickhouse = new ClickHouse();
 
@@ -57,7 +56,11 @@ switch (type) {
 
 const sendRequests = async () => {
     try {
-        let reqFactory = require(`./query/${reqInfo.file}`)[reqInfo.func];
+        let reqDirectory = require(`./query/${reqInfo.file}`), timeStamps;
+        if(reqDirectory['getInitData']) {
+            timeStamps = await reqDirectory['getInitData'](clickhouse);
+        }
+        let reqFactory = reqDirectory[reqInfo.func];
         let responses = 0, totalFailed = 0;
         if (options.type === "onetime") {
             requestCount = options.numOfBatches * options.reqPerBatch;
@@ -65,7 +68,7 @@ const sendRequests = async () => {
             for (let i = 0; i < options.numOfBatches; i++) {
                 //Create batch
                 for (let j = 0; j < options.reqPerBatch; j++) {
-                    let queryInfo = reqFactory();
+                    let queryInfo = reqFactory(timeStamps);
                     report[(i + 1) * (j + 1)] = { startTime: +new Date(), query: queryInfo.query, where: Object.keys(queryInfo.where).join(' ') };
                     sendQuery(queryInfo.query, (i + 1) * (j + 1)).then((res) => {
                         // report[queries.indexOf(query)].endTime = new Date();
@@ -212,9 +215,9 @@ function printConsolidatedInfo(responses, totalFailed) {
         // console.table(report);
         saveReportToCSV(report);
         var player = require('play-sound')(opts = {})
-        player.play('./foo.mp3', function(err){
-            if (err) throw err
-        })
+        // player.play('./foo.mp3', function(err){
+        //     if (err) throw err
+        // })
         //process.exit(1);
     }
 }
